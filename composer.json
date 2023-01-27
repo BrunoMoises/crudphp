@@ -1,0 +1,17 @@
+{
+    "name": "bruno/crud-php",
+    "description": "Projeto de CRUD em PHP",
+    "liscense": "MIT",
+    "authors": [
+        {
+            "name": "Bruno",
+            "email": "brunoomoises7@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "require": {}
+}
