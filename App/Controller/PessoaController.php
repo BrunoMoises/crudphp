@@ -18,7 +18,7 @@ class PessoaController
         $result = $this->validate($pessoa);
 
         if ($result != "") {
-            echo json_encode(["result" => $result]);
+            return json_encode(["result" => $result]);
         }
 
         $this->pessoaModel->create($pessoa);
@@ -31,7 +31,7 @@ class PessoaController
         $result = $this->validate($pessoa, true);
 
         if ($result != "") {
-            echo json_encode(["result" => $result]);
+            return json_encode(["result" => $result]);
         }
 
 
@@ -50,7 +50,7 @@ class PessoaController
 
     function readAll()
     {
-        return json_encode(["name" => "readall"]);
+        return $this->pessoaModel->readAll();
     }
 
     private function convertType($data)
