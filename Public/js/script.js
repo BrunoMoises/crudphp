@@ -4,8 +4,6 @@ $(document).ready(function () {
     readAll();
 });
 
-console.clear();
-
 //EVENTOS
 $('#bt-new').click(function () {
     openModalCreate(true);
@@ -36,6 +34,13 @@ function deletePessoa(id) {
     }
 }
 
+function editaPessoa(id) {
+    if (id <= 0)
+        return;
+
+    readById(id, false);
+}
+
 //ENVIO
 function sendForm() {
     var obj = {
@@ -48,7 +53,7 @@ function sendForm() {
     if (obj.id_pessoa == 0) {
         create(obj);
     } else {
-        console.log("Editar");
+        update(obj);
     }
 }
 
@@ -83,6 +88,18 @@ function createTable(data) {
 
         tabela.appendChild(linha.content);
     }
+}
+
+function editModal(data) {
+    if (data == null)
+        return;
+
+    $('#txtId').val(data.Id);
+    $('#txtNome').val(data.Nome);
+    $('#txtEmail').val(data.Email);
+    $('#seCategoria').val(data.Cat);
+
+    openModalCreate(false);
 }
 
 //AJAX
@@ -127,6 +144,21 @@ function readAll() {
     });
 }
 
+function readById(id, view) {
+    $.ajax({
+        url: "api/pessoa/" + id,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (view) {
+                createViewModal(data);
+            } else {
+                editModal(data);
+            }
+        }
+    });
+}
+
 function deleteId(id) {
     $.ajax({
         url: "api/pessoa/" + id,
@@ -138,6 +170,32 @@ function deleteId(id) {
         },
         error: function (error) {
             alert("Houve um erro na deleção");
+        }
+    });
+}
+
+function update(obj) {
+    $.ajax({
+        url: "api/pessoa/" + obj.id_pessoa,
+        type: "PUT",
+        data: obj,
+        dataType: "json",
+        beforeSend: function () {
+            $('#btnSubmit').attr("disabled", true);
+        },
+        success: function (data) {
+            if (data.result == "ok") {
+                closeModalCreate();
+                readAll();
+            } else {
+                alert("Houve um erro ao atualizar");
+            }
+        },
+        error: function (error) {
+            alert("Houve um erro ao atualizar");
+        },
+        complete: function () {
+            $('#btnSubmit').attr("disabled", false);
         }
     });
 }
