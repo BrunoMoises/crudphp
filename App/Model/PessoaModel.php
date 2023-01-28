@@ -68,26 +68,30 @@ class PessoaModel
         $this->items->nome = $pessoa->getNome();
         $this->items->email = $pessoa->getEmail();
         $this->items->id_categoria = $pessoa->getCat();
-        
+
         if (!$this->items->createPessoa())
             return "Erro ao gravar";
 
         return "ok";
     }
 
-    /*
+
     public function update(Pessoa $pessoa)
     {
-    $result = "not found";
-    for ($i = 0; $i < count($this->listPessoa); $i++) {
-    if ($this->listPessoa[$i]->getId() == $pessoa->getId()) {
-    $this->listPessoa[$i] = $pessoa;
-    $result = "ok";
+        $this->db = $this->getConnection();
+        $this->items = new Database($this->db);
+
+        $this->items->id_pessoa = $pessoa->getId();
+        $this->items->nome = $pessoa->getNome();
+        $this->items->email = $pessoa->getEmail();
+        $this->items->id_categoria = $pessoa->getCat();
+
+        if (!$this->items->updatePessoa())
+            return "Erro ao gravar";
+
+        return "ok";
     }
-    }
-    $this->save();
-    return $result;
-    }
+    /*
     public function delete($id_pessoa)
     {
     $result = "not found";
