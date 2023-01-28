@@ -21,7 +21,7 @@ class PessoaController
             return json_encode(["result" => $result]);
         }
 
-        $this->pessoaModel->create($pessoa);
+        return json_encode(["result" => $this->pessoaModel->create($pessoa)]);
     }
 
     function update($id_pessoa = 0, $data = null)
@@ -35,17 +35,31 @@ class PessoaController
         }
 
 
-        //return json_encode(["name" => "update"]);
+        $result = $this->pessoaModel->update($pessoa);
+
+        return json_encode(["result" => $result]);
     }
 
     function delete($id = 0)
     {
-        return json_encode(["name" => "delete"]);
+        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id <= 0)
+            return json_encode(["result" => "invalid id"]);
+
+        $result = $this->pessoaModel->delete($id);
+
+        return json_encode(["result" => $result]);
     }
 
     function readById($id = 0)
     {
-        return json_encode(["name" => "readById - $id"]);
+        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id <= 0)
+            return json_encode(["result" => "invalid id"]);
+
+        return $this->pessoaModel->readById($id);
     }
 
     function readAll()
@@ -57,8 +71,8 @@ class PessoaController
     {
         return new Pessoa(
             null,
-            (isset($data['nome']) ? $data['nome'] : null),
-            (isset($data['email']) ? $data['email'] : null),
+            (isset($data['nome']) ? filter_var($data['nome'], FILTER_SANITIZE_STRING) : null),
+            (isset($data['email']) ? filter_var($data['email'], FILTER_SANITIZE_STRING) : null),
             (isset($data['id_categoria']) ? $data['id_categoria'] : null)
         );
     }

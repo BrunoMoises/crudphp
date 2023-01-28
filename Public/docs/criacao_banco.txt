@@ -1,0 +1,19 @@
+CREATE TABLE `crud`.`pessoa` (`id_pessoa` INT NULL AUTO_INCREMENT , `nome` VARCHAR(255) NULL , `email` VARCHAR(255) NULL , `id_categoria` INT NULL , PRIMARY KEY (`id_pessoa`)) ENGINE = InnoDB;
+
+CREATE TABLE `crud`.`categoria` (`id_categoria` INT NULL AUTO_INCREMENT , `nome` VARCHAR(30) NULL , PRIMARY KEY (`id_categoria`)) ENGINE = InnoDB;
+
+ALTER TABLE `pessoa` ADD CONSTRAINT `fk_categoria_pesoas` FOREIGN KEY (`id_categoria`) REFERENCES `categoria`(`id_categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+INSERT INTO `categoria` (`id_categoria`, `nome`) VALUES (NULL, 'Admin');
+
+INSERT INTO `categoria` (`id_categoria`, `nome`) VALUES (NULL, 'Gerente');
+
+INSERT INTO `categoria` (`id_categoria`, `nome`) VALUES (NULL, 'Normal');
+
+INSERT INTO `pessoa` (`id_pessoa`, `nome`, `email`, `id_categoria`) VALUES (NULL, 'Jorge da Silva', 'jorge@terra.com.br', '1');
+
+INSERT INTO `pessoa` (`id_pessoa`, `nome`, `email`, `id_categoria`) VALUES (NULL, 'Flavia Monteiro', 'flavia@globo.com', '2');
+
+INSERT INTO `pessoa` (`id_pessoa`, `nome`, `email`, `id_categoria`) VALUES (NULL, 'Raphael Souza Santos', 'rsantos@gmail.com', '1');
+
+INSERT INTO `pessoa` (`id_pessoa`, `nome`, `email`, `id_categoria`) VALUES (NULL, 'Pedro Paulo Mota', 'ppmota@gmail.com', '1');

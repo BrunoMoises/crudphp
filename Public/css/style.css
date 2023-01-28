@@ -1,0 +1,24 @@
+.pointer {
+    cursor: pointer;
+}
+
+/*              ICON
+=====================================*/
+.icon {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.icon-x {
+    color: rgb(234, 89, 89);
+}
+
+/*              HOVER
+=====================================*/
+.icon-edit:hover {
+    color: #3498db;
+}
+
+.icon-x:hover {
+    color: rgb(94, 8, 8);
+}
