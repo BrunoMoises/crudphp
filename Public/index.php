@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
 </head>
 
 <body>
@@ -35,18 +36,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td width="10"><i class="bi-x-circle-fill icon icon-x pointer" title="Excluir pessoa"
-                                aria-multiline="Excluir pessoa" onclick="deletePessoa()"></i></td>
-                        <td width="10"><i class="bi-pencil-fill icon icon-edit pointer" title="Editar pessoa"
-                                aria-multiline="Editar pessoa"></i></td>
-                        <td align="center" width="20"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+
                 </tbody>
             </table>
+            <script id="tmplLinha" type="text/template">
+                <tr>
+                    <td width="10"><i class="bi-x-circle-fill icon icon-x pointer" title="Excluir pessoa"
+                            aria-multiline="Excluir pessoa" onclick="deletePessoa('{{id_pessoa}}')"></i></td>
+                    <td width="10"><i class="bi-pencil-fill icon icon-edit pointer" title="Editar pessoa"
+                            aria-multiline="Editar pessoa" onclick="editaPessoa('{{id_pessoa}}')"></i></td>
+                    <td align="center" width="40">{{id_pessoa}}</td>
+                    <td>{{Nome}}</td>
+                    <td>{{Email}}</td>
+                    <td>{{id_categoria}}</td>
+                </tr>
+            </script>
         </div>
     </div>
 
@@ -90,9 +94,7 @@
     </div>
 
     <script src="js/jquery-3.6.3.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 
