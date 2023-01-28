@@ -59,14 +59,23 @@ class PessoaModel
             return json_encode($pes_arr);
         }
     }
-    /*
+
     public function create(Pessoa $pessoa)
     {
-    $pessoa->setId($this->getLastId());
-    $this->listPessoa[] = $pessoa;
-    $this->save();
-    return "ok";
+        $this->db = $this->getConnection();
+        $this->items = new Database($this->db);
+
+        $this->items->nome = $pessoa->getNome();
+        $this->items->email = $pessoa->getEmail();
+        $this->items->id_categoria = $pessoa->getCat();
+        
+        if (!$this->items->createPessoa())
+            return "Erro ao gravar";
+
+        return "ok";
     }
+
+    /*
     public function update(Pessoa $pessoa)
     {
     $result = "not found";
@@ -91,32 +100,7 @@ class PessoaModel
     $this->listPessoa = array_filter(array_values($this->listPessoa));
     $this->save();
     return $result;
-    }
-    private function save()
-    {
-    $temp = [];
-    foreach ($this->listPessoa as $p) {
-    $temp[] = [
-    "id_pessoa" => $p->getId(),
-    "nome" => $p->getNome(),
-    "email" => $p->getEmail(),
-    "id_categoria" => $p->getCat()
-    ];
-    $fp = fopen($this->fileName, "w");
-    fwrite($fp, json_encode($temp));
-    fclose($fp);
-    }
-    }
-    private function getLastId()
-    {
-    $lastId = 0;
-    foreach ($this->listPessoa as $p) {
-    if ($p->getId() > $lastId)
-    $lastId = $p->getId();
-    }
-    return $lastId + 1;
-    }
-    */
+    } */
     private function load()
     {
         $this->db = $this->getConnection();
