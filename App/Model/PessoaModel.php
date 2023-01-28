@@ -4,123 +4,130 @@ namespace App\Model;
 
 use App\Entity\Pessoa;
 use App\Util\Serialize;
+use App\Database\Database;
+use Exception;
+use mysqli;
 
 class PessoaModel
 {
-    private $fileName;
+    public $database;
+    private $db;
+    private $items;
     private $listPessoa = [];
 
     public function __construct()
     {
-        $this->fileName = "../database/pessoa.db";
         $this->load();
+    }
+
+    public function getConnection()
+    {
+        $this->db = null;
+        try {
+            $this->db = new mysqli('localhost', 'root', '', 'crud');
+        } catch (Exception $e) {
+            echo "Database could not be connected: " . $e->getMessage();
+        }
+
+        return $this->db;
     }
 
     public function readAll()
     {
-        return (new Serialize())->serialize($this->listPessoa);
+        return $this->listPessoa;
     }
 
-    public function readById($id_pessoa)
+    /*public function readById($id_pessoa)
     {
-        foreach ($this->listPessoa as $p) {
-            if ($p->getId() == $id_pessoa)
-                return (new Serialize())->serialize($p);
-        }
-
-        return json_encode([]);
+    foreach ($this->listPessoa as $p) {
+    if ($p->getId() == $id_pessoa)
+    return (new Serialize())->serialize($p);
     }
-
+    return json_encode([]);
+    }
     public function create(Pessoa $pessoa)
     {
-        $pessoa->setId($this->getLastId());
-        $this->listPessoa[] = $pessoa;
-        $this->save();
-
-        return "ok";
+    $pessoa->setId($this->getLastId());
+    $this->listPessoa[] = $pessoa;
+    $this->save();
+    return "ok";
     }
-
     public function update(Pessoa $pessoa)
     {
-        $result = "not found";
-
-        for ($i = 0; $i < count($this->listPessoa); $i++) {
-            if ($this->listPessoa[$i]->getId() == $pessoa->getId()) {
-                $this->listPessoa[$i] = $pessoa;
-                $result = "ok";
-            }
-        }
-
-        $this->save();
-
-        return $result;
+    $result = "not found";
+    for ($i = 0; $i < count($this->listPessoa); $i++) {
+    if ($this->listPessoa[$i]->getId() == $pessoa->getId()) {
+    $this->listPessoa[$i] = $pessoa;
+    $result = "ok";
     }
-
+    }
+    $this->save();
+    return $result;
+    }
     public function delete($id_pessoa)
     {
-        $result = "not found";
-
-        for ($i = 0; $i < count($this->listPessoa); $i++) {
-            if ($this->listPessoa[$i]->getId() == $id_pessoa) {
-                unset($this->listPessoa[$i]);
-                $result = "ok";
-            }
-                
-        }
-
-        $this->listPessoa = array_filter(array_values($this->listPessoa));
-        $this->save();
-
-        return $result;
+    $result = "not found";
+    for ($i = 0; $i < count($this->listPessoa); $i++) {
+    if ($this->listPessoa[$i]->getId() == $id_pessoa) {
+    unset($this->listPessoa[$i]);
+    $result = "ok";
     }
-
+    }
+    $this->listPessoa = array_filter(array_values($this->listPessoa));
+    $this->save();
+    return $result;
+    }
     private function save()
     {
-        $temp = [];
-
-        foreach ($this->listPessoa as $p) {
-            $temp[] = [
-                "id_pessoa" => $p->getId(),
-                "nome" => $p->getNome(),
-                "email" => $p->getEmail(),
-                "id_categoria" => $p->getCat()
-            ];
-
-            $fp = fopen($this->fileName, "w");
-            fwrite($fp, json_encode($temp));
-            fclose($fp);
-        }
+    $temp = [];
+    foreach ($this->listPessoa as $p) {
+    $temp[] = [
+    "id_pessoa" => $p->getId(),
+    "nome" => $p->getNome(),
+    "email" => $p->getEmail(),
+    "id_categoria" => $p->getCat()
+    ];
+    $fp = fopen($this->fileName, "w");
+    fwrite($fp, json_encode($temp));
+    fclose($fp);
     }
-
+    }
     private function getLastId()
     {
-        $lastId = 0;
-
-        foreach ($this->listPessoa as $p) {
-            if ($p->getId() > $lastId)
-                $lastId = $p->getId();
-        }
-
-        return $lastId + 1;
+    $lastId = 0;
+    foreach ($this->listPessoa as $p) {
+    if ($p->getId() > $lastId)
+    $lastId = $p->getId();
     }
-
+    return $lastId + 1;
+    }
+    */
     private function load()
     {
-        if (!file_exists($this->fileName))
-            return [];
+        $this->db = $this->getConnection();
+        $this->items = new Database($this->db);
 
-        $fp = fopen($this->fileName, "r");
-        $str = fread($fp, filesize($this->fileName));
-        fclose($fp);
+        $records = $this->items->getPessoas();
+        $itemCount = $records->num_rows;
+        $pessoaArr = array();
 
-        $arrayPessoa = json_decode($str);
+        if ($itemCount > 0) {
+            while ($row = $records->fetch_assoc()) {
+                array_push($this->listPessoa, $row);
+                /*for ($i = 0; $i < count($pessoaArr["body"]); $i++) {
+                    $this->listPessoa[] = new Pessoa(
+                        $row['id_pessoa'],
+                        $row['nome'],
+                        $row['email'],
+                        $row['cat']
+                    );
+                }*/
 
-        foreach ($arrayPessoa as $p) {
-            $this->listPessoa[] = new Pessoa(
-                    $p->id_pessoa,
-                    $p->nome,
-                    $p->email,
-                    $p->id_categoria
+            }
+        } else {
+            http_response_code(404);
+            return json_encode(
+                array("message" => "Não encontrado.")
             );
         }
     }

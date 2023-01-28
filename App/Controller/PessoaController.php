@@ -64,7 +64,7 @@ class PessoaController
 
     function readAll()
     {
-        return $this->pessoaModel->readAll();
+        return json_encode($this->pessoaModel->readAll());
     }
 
     private function convertType($data)

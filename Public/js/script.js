@@ -76,10 +76,10 @@ function createTable(data) {
 
     for (var i = 0; i < data.length; i++) {
         var pessoa = {};
-        pessoa.id_pessoa = data[i].Id;
-        pessoa.Nome = data[i].Nome;
-        pessoa.Email = data[i].Email;
-        pessoa.id_categoria = data[i].Cat;
+        pessoa.id_pessoa = data[i].id_pessoa;
+        pessoa.Nome = data[i].nome;
+        pessoa.Email = data[i].email;
+        pessoa.id_categoria = data[i].cat;
 
         var linha = {};
         linha.template = document.createElement("template");;
