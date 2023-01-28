@@ -91,20 +91,20 @@ class PessoaModel
 
         return "ok";
     }
-    /*
+
     public function delete($id_pessoa)
     {
-    $result = "not found";
-    for ($i = 0; $i < count($this->listPessoa); $i++) {
-    if ($this->listPessoa[$i]->getId() == $id_pessoa) {
-    unset($this->listPessoa[$i]);
-    $result = "ok";
+        $this->db = $this->getConnection();
+        $this->items = new Database($this->db);
+
+        $this->items->id_pessoa = isset($id_pessoa) ? $id_pessoa : die();
+
+        if (!$this->items->deletePessoa())
+            return "Erro ao gravar";
+
+        return "ok";
     }
-    }
-    $this->listPessoa = array_filter(array_values($this->listPessoa));
-    $this->save();
-    return $result;
-    } */
+
     private function load()
     {
         $this->db = $this->getConnection();
