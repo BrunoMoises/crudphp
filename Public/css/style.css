@@ -1,3 +1,12 @@
+body {
+    font-family: 'Lobster', cursive !important;
+}
+
+p {
+    font-size: 22px;
+    color: rgb(173, 166, 166);
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -13,10 +22,14 @@
     color: rgb(234, 89, 89);
 }
 
+.icon-git {
+    color: white !important;
+}
+
 /*              HOVER
 =====================================*/
-.icon-edit:hover {
-    color: #3498db;
+.icon-edit:hover, .icon-git:hover {
+    color: #3498db !important;
 }
 
 .icon-x:hover {
