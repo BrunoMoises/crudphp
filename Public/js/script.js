@@ -94,10 +94,10 @@ function editModal(data) {
     if (data == null)
         return;
 
-    $('#txtId').val(data.Id);
-    $('#txtNome').val(data.Nome);
-    $('#txtEmail').val(data.Email);
-    $('#seCategoria').val(data.Cat);
+    $('#txtId').val(data.id_pessoa);
+    $('#txtNome').val(data.nome);
+    $('#txtEmail').val(data.email);
+    $('#seCategoria').val(data.id_categoria);
 
     openModalCreate(false);
 }

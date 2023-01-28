@@ -30,13 +30,13 @@ class Database
 
     public function getId()
     {
-        $sqlQuery = "SELECT p.id_pessoa, p.nome, p.email, c.nome cat FROM " . $this->db_table . " p 
+        $sqlQuery = "SELECT p.id_pessoa, p.nome, p.email, p.id_categoria FROM " . $this->db_table . " p 
         INNER JOIN categoria c ON c.id_categoria = p.id_categoria WHERE id_pessoa = " . $this->id_pessoa;
         $record = $this->db->query($sqlQuery);
         $dataRow = $record->fetch_assoc();
         $this->nome = $dataRow['nome'];
         $this->email = $dataRow['email'];
-        $this->cat = $dataRow['cat'];
+        $this->id_categoria = $dataRow['id_categoria'];
     }
 
     public function createPessoa()

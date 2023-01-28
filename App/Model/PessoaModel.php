@@ -37,14 +37,29 @@ class PessoaModel
         return $this->listPessoa;
     }
 
-    /*public function readById($id_pessoa)
+    public function readById($id_pessoa)
     {
-    foreach ($this->listPessoa as $p) {
-    if ($p->getId() == $id_pessoa)
-    return (new Serialize())->serialize($p);
+        $this->db = $this->getConnection();
+        $this->items = new Database($this->db);
+
+        $this->items->id_pessoa = $id_pessoa;
+        $this->items->getId();
+
+        if ($this->items->nome != null) {
+
+            $pes_arr = array(
+                "id_pessoa" => $this->items->id_pessoa,
+                "nome" => $this->items->nome,
+                "email" => $this->items->email,
+                "id_categoria" => $this->items->id_categoria
+            );
+
+            http_response_code(200);
+
+            return json_encode($pes_arr);
+        }
     }
-    return json_encode([]);
-    }
+    /*
     public function create(Pessoa $pessoa)
     {
     $pessoa->setId($this->getLastId());
@@ -114,15 +129,6 @@ class PessoaModel
         if ($itemCount > 0) {
             while ($row = $records->fetch_assoc()) {
                 array_push($this->listPessoa, $row);
-                /*for ($i = 0; $i < count($pessoaArr["body"]); $i++) {
-                    $this->listPessoa[] = new Pessoa(
-                        $row['id_pessoa'],
-                        $row['nome'],
-                        $row['email'],
-                        $row['cat']
-                    );
-                }*/
-
             }
         } else {
             http_response_code(404);
