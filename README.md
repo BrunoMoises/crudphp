@@ -23,7 +23,7 @@ git clone https://github.com/BrunoMoises/crudphp.git
 
 2. Crie um banco de dados MySQL e rode o script inserido no arquivo `App/Docs/criacao_banco.txt` incluído no projeto.
 
-3. Se necessário configure as informações de acesso ao banco de dados no arquivo `App/Model/PacienteModel.php`.
+3. Se necessário configure as informações de acesso ao banco de dados no arquivo `App/Model/PessoaModel.php`.
 
 4. Configure o seu servidor web para apontar para o diretório raiz do projeto.
 
