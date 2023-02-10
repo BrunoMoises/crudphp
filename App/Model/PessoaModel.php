@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Entity\Pessoa;
-use App\Util\Serialize;
 use App\Database\Database;
 use Exception;
 use mysqli;
